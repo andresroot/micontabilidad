@@ -29,11 +29,11 @@ func main() {
 
 		t, err := template.ParseFiles("test.html") //parse the html file homepage.html
 		if err != nil {                            // if there is an error
-			fmt.Fprintf(w, "template parsing error: "+err.Error()) // log it
+			fmt.Fprintf(w, "template parsing error: ") // log it
 		}
 		err = t.Execute(w, HomePageVars) //execute the template and pass it the HomePageVars struct to fill in the gaps
 		if err != nil {                  // if there is an error
-			fmt.Fprintf(w, "template executing error: "+err.Error()) //log it
+			fmt.Fprintf(w, "template executing error: ") //log it
 		}
 	})
 
