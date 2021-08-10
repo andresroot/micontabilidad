@@ -28,7 +28,7 @@ func main() {
 		ts, err := template.ParseFiles("test.html")
 		if err != nil {
 			log.Println(err.Error())
-			http.Error(w, "Internal Server Error1111", 500)
+			http.Error(w, "Internal Server Error1111"+err.Error(), 500)
 			return
 		}
 
