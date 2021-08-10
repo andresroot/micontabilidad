@@ -6,6 +6,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 )
 
 type PageVariables struct {
@@ -25,10 +27,16 @@ func main() {
 	})
 	r.HandleFunc("/website/", func(w http.ResponseWriter, r *http.Request) {
 
+		dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+		if err != nil {
+			log.Fatal(err)
+		}
+		//fmt.Println(dir)
+
 		ts, err := template.ParseFiles("vista/test.html")
 		if err != nil {
 			log.Println(err.Error())
-			http.Error(w, "Internal Server Error1111"+err.Error(), 500)
+			http.Error(w, "Internal Server Error1111"+err.Error()+dir, 500)
 			return
 		}
 
