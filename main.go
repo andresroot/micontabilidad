@@ -8,7 +8,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Sadconf Platform 2021")
+		fmt.Fprintf(w, "Sadconf Platform 2021 --2")
 	})
 
 	http.HandleFunc("/website/", func(w http.ResponseWriter, r *http.Request) {
