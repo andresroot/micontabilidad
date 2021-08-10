@@ -25,7 +25,7 @@ func main() {
 	})
 	r.HandleFunc("/website/", func(w http.ResponseWriter, r *http.Request) {
 
-		ts, err := template.ParseFiles("test.html")
+		ts, err := template.ParseFiles("~/test.html")
 		if err != nil {
 			log.Println(err.Error())
 			http.Error(w, "Internal Server Error1111"+err.Error(), 500)
