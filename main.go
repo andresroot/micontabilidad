@@ -20,6 +20,9 @@ func main() {
 		fmt.Fprintf(w, "Sadconf Platform 2021 555111")
 	})
 
+	r.HandleFunc("/prueba/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Prueba")
+	})
 	r.HandleFunc("/website/", func(w http.ResponseWriter, r *http.Request) {
 		now := time.Now()              // find the time right now
 		HomePageVars := PageVariables{ //store the date and time in a struct
