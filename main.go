@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -23,8 +24,16 @@ func main() {
 			Country: "Australia",
 			City:    "Paris",
 		}
-		t.Execute(w, items)
-
+		//	t.Execute(w, items)
+		buf := &bytes.Buffer{}
+		err = t.Execute(buf, items)
+		if err != nil {
+			// Send back error message, for example:
+			http.Error(w, "Hey, Request was bad!", http.StatusBadRequest) // HTTP 400 status
+		} else {
+			// No error, send the content, HTTP 200 response status implied
+			buf.WriteTo(w)
+		}
 		//	name := r.URL.Path[len("/greet/"):]
 		//	fmt.Fprintf(w, "Hello %s\n", name)
 	})
