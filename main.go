@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"html/template"
-	"log"
 	"net/http"
 	"time"
 )
@@ -30,11 +29,11 @@ func main() {
 
 		t, err := template.ParseFiles("./test.html") //parse the html file homepage.html
 		if err != nil {                              // if there is an error
-			log.Print("template parsing error: ", err) // log it
+			fmt.Fprintf(w, "template parsing error: "+err.Error()) // log it
 		}
 		err = t.Execute(w, HomePageVars) //execute the template and pass it the HomePageVars struct to fill in the gaps
 		if err != nil {                  // if there is an error
-			log.Print("template executing error: ", err) //log it
+			fmt.Fprintf(w, "template executing error: "+err.Error()) //log it
 		}
 	})
 
