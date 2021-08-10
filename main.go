@@ -27,8 +27,8 @@ func main() {
 			Time: now.Format("15:04:05"),
 		}
 
-		t, err := template.ParseFiles("./test.html") //parse the html file homepage.html
-		if err != nil {                              // if there is an error
+		t, err := template.ParseFiles("test.html") //parse the html file homepage.html
+		if err != nil {                            // if there is an error
 			fmt.Fprintf(w, "template parsing error: "+err.Error()) // log it
 		}
 		err = t.Execute(w, HomePageVars) //execute the template and pass it the HomePageVars struct to fill in the gaps
