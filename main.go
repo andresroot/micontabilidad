@@ -3,16 +3,19 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"github.com/gorilla/mux"
 	"html/template"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Sadconf Platform 2021 --2")
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Sadconf Platform 2021 555")
 	})
 
-	http.HandleFunc("/website/", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/website/", func(w http.ResponseWriter, r *http.Request) {
 		t, err := template.ParseFiles("test.html")
 		if err != nil {
 			fmt.Println(err)
@@ -38,5 +41,5 @@ func main() {
 		//	fmt.Fprintf(w, "Hello %s\n", name)
 	})
 
-	http.ListenAndServe(":9990", nil)
+	http.ListenAndServe(":9990", r)
 }
