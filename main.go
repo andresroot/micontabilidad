@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"html/template"
+	"log"
 	"net/http"
-	"time"
 )
 
 type PageVariables struct {
@@ -24,19 +24,21 @@ func main() {
 		fmt.Fprintf(w, "Prueba")
 	})
 	r.HandleFunc("/website/", func(w http.ResponseWriter, r *http.Request) {
-		now := time.Now()              // find the time right now
-		HomePageVars := PageVariables{ //store the date and time in a struct
-			Date: now.Format("02-01-2006"),
-			Time: now.Format("15:04:05"),
+
+		ts, err := template.ParseFiles("test.html")
+		if err != nil {
+			log.Println(err.Error())
+			http.Error(w, "Internal Server Error", 500)
+			return
 		}
 
-		t, err := template.ParseFiles("test.html") //parse the html file homepage.html
-		if err != nil {                            // if there is an error
-			fmt.Fprintf(w, "template parsing error: ") // log it
-		}
-		err = t.Execute(w, HomePageVars) //execute the template and pass it the HomePageVars struct to fill in the gaps
-		if err != nil {                  // if there is an error
-			fmt.Fprintf(w, "template executing error: ") //log it
+		// We then use the Execute() method on the template set to write the template
+		// content as the response body. The last parameter to Execute() represents any
+		// dynamic data that we want to pass in, which for now we'll leave as nil.
+		err = ts.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+			http.Error(w, "Internal Server Error", 500)
 		}
 	})
 
