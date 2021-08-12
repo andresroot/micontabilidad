@@ -25,12 +25,19 @@ func favicon(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	Raiz, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if Raiz == "C:\\micontabilidad\\bin" {
+		Raiz = ""
+	} else {
+		Raiz = Raiz + "/"
+	}
+
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
-		http.FileServer(http.Dir(dir+"/static/"))))
+		http.FileServer(http.Dir(Raiz+"static/"))))
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Sadconf Platform 2021 555111")
@@ -43,16 +50,10 @@ func main() {
 	// default
 	r.HandleFunc("/default/", func(w http.ResponseWriter, r *http.Request) {
 
-		dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-		if err != nil {
-			log.Fatal(err)
-		}
-		//fmt.Println(dir)
-
-		ts, err := template.ParseFiles(dir + "/vista/default.html")
+		ts, err := template.ParseFiles(Raiz + "vista/default.html")
 		if err != nil {
 			log.Println(err.Error())
-			http.Error(w, "Internal Server Error1111"+err.Error()+dir, 500)
+			http.Error(w, "Internal Server Error1111"+err.Error()+Raiz, 500)
 			return
 		}
 
@@ -70,10 +71,10 @@ func main() {
 
 		//fmt.Println(dir)
 
-		ts, err := template.ParseFiles(dir + "/vista/test.html")
+		ts, err := template.ParseFiles(Raiz + "vista/test.html")
 		if err != nil {
 			log.Println(err.Error())
-			http.Error(w, "Internal Server Error1111"+err.Error()+dir, 500)
+			http.Error(w, "Internal Server Error1111"+err.Error()+Raiz, 500)
 			return
 		}
 
