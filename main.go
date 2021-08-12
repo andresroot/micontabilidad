@@ -30,7 +30,7 @@ func main() {
 		log.Fatal(err)
 	}
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
-		http.FileServer(http.Dir("./static"))))
+		http.FileServer(http.Dir("./static/"))))
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Sadconf Platform 2021 555111")
