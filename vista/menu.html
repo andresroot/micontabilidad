@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.87.0">
+    <title>Sadconf Platform </title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+
+</head>
+<body class="text-center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Inicio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link fw-bold" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Proyectos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Tareas</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<main>
+    <div class="row">
+        <div class="col-md-9">
+
+        </div>
+        <div class="col-md-3 m-5 p-5">
+            <button type="button" class="btn btn-primary" onclick="Nuevo1()">Nuevo</button>
+          </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
+        <div class="card">
+            <h5 class="card-header">Featured</h5>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {{ range .tareas}}
+
+                    <tr>
+                        <th scope="row">   {{ .Id}}</th>
+                        <td> {{ .Titulo}}</td>
+                        <td>   {{ .Descripcion}}</td>
+                        <td>  {{ .Estado}}</td>
+
+                        <th > <a onclick="Editar('{{ .Id}}')">Editar</a></th>
+                        <th > <a onclick="Eliminar('{{ .Id}}')">Eliminar</a></th>
+
+                    </tr>
+
+                    {{end}}
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+
+</main>
+
+<div class="modal fade" id="ModalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva Tarea</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <input type="hidden" class="form-control" name="Id" id="Id">
+                    <div class="form-group">
+                        <label for="titulo" class="col-form-label">Titulo:</label>
+                        <input type="text" class="form-control" name="Titulo" id="Titulo">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion" class="col-form-label">Descripcion:</label>
+                        <textarea class="form-control" name="Descripcion" id="Descripcion"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select class="form-control" id="Estado" name="Estado">
+                            <option value="Sin Iniciar">Sin Iniciar</option>
+                            <option value="Iniciado">Iniciado</option>
+                            <option value="Proceso">Proceso</option>
+                            <option value="Finalizado">Finalizado</option>
+
+                        </select>
+                    </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="BotonNuevo" onclick="guardar()" class="btn btn-primary">Aceptar</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script type="text/javascript" language="javascript" >
+    $(document).ready(function(){
+
+
+
+
+    });
+
+    function Nuevo1(){
+        $('#ModalNuevo').modal('show');
+        $('#Id').val("0");
+    }
+    function Editar(miId){
+        $('#ModalNuevo').modal('show');
+        $('#Id').val(miId);
+        accion = "/Vertarea/"+miId;
+
+        $.ajax({
+            url: accion,
+            type: "GET",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (respuesta) {
+                  $('#Titulo').val(respuesta.Titulo);
+                  $('#Descripcion').val(respuesta.Descripcion);
+                  $('#Estado').val(respuesta.Estado);
+
+                $('#ModalNuevo').modal('show');
+            },
+        });
+
+    }
+
+
+    function guardar(accion)
+    {
+        var datosEnviar = {
+            "Titulo": $('#Titulo').val(),
+            "Descripcion": $('#Descripcion').val(),
+            "Estado": $('#Estado').val(),
+            "Id": Number($('#Id').val()),
+        }
+
+        //
+        console.log(JSON.stringify(datosEnviar));
+
+        // enviar
+        if ( $('#Id').val()=="0")
+        {
+            accion = "/Nuevatarea";
+        }
+        else
+        {
+            accion = "/Editartarea";
+        }
+
+        $.ajax({
+            url: accion,
+            type: "POST",
+            async: false,
+            data: JSON.stringify(datosEnviar),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.Resultado == true) {
+                    alert("Documento Guardado Correctamente");
+                  //  document.location.href = '/VentaLista';
+                    location.reload();
+                } else {
+                    alert("Ocurrio Un Error Al Guardar");
+                    location.reload();
+                }
+            },
+        });
+
+    }
+</script>
+</body>
+</html>
