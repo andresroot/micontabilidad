@@ -178,6 +178,29 @@
         $('#ModalNuevo').modal('show');
         $('#Id').val("0");
     }
+
+    function Eliminar(miId){
+      //  $('#ModalNuevo').modal('show');
+       // $('#Id').val(miId);
+        accion = "/Eliminartarea/"+miId;
+
+        $.ajax({
+            url: accion,
+            type: "GET",
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (respuesta) {
+                if(respuesta.Resultado==true)
+                {
+                    alert("Registro Eliminado ");
+                    location.reload();
+                }
+            },
+        });
+
+    }
+
     function Editar(miId){
         $('#ModalNuevo').modal('show');
         $('#Id').val(miId);

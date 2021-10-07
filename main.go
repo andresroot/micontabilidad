@@ -106,6 +106,7 @@ func main() {
 
 	r.Path("/Nuevatarea").HandlerFunc(Nuevatarea).Name("DocumentoNuevo")
 	r.Path("/Vertarea/{codigo}").HandlerFunc(Vertarea).Name("DocumentoNuevo")
+	r.Path("/Eliminartarea/{codigo}").HandlerFunc(Eliminartarea).Name("DocumentoNuevo")
 	r.Path("/Editartarea").HandlerFunc(Editartarea).Name("DocumentoNuevo")
 
 	http.ListenAndServe(":9990", r)
@@ -225,6 +226,37 @@ func Vertarea(w http.ResponseWriter, r *http.Request) {
 	db.Table("tareas").Where("Id = ?", Codigo).Scan(&miTarea)
 
 	js, err := json.Marshal(miTarea)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+
+	//result.RowsAffected
+}
+
+func Eliminartarea(w http.ResponseWriter, r *http.Request) {
+
+	dsn := "host=192.168.1.7 user=postgres password=Murc4505 dbname=Base2020 port=5432 sslmode=disable "
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+
+		panic("failed to connect database")
+
+	}
+
+	Codigo := mux.Vars(r)["codigo"]
+
+	var miTarea Tarea
+	db.Table("tareas").Where("Id = ?", Codigo).Scan(&miTarea)
+	db.Delete(&miTarea, Codigo)
+
+	var resultado bool
+	resultado = true
+
+	js, err := json.Marshal(Resultado{resultado})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
